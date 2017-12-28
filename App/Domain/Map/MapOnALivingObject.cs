@@ -3,7 +3,7 @@ using Srpg.App.Domain.Unit;
 
 namespace Srpg.App.Domain.Map
 {
-    public class MapOnALivingObject
+    public class MapOnALivingCreature
     {
         private readonly int creatureId;
         private readonly int teamId;        
@@ -12,7 +12,7 @@ namespace Srpg.App.Domain.Map
         private int cretureXLocation;
         private int cretureYLocation;
 
-        public MapOnALivingObject(int creatureId, int teamId, MapImpl map, LivingCreature creature, int cretureXLocation, int cretureYLocation)
+        public MapOnALivingCreature(int creatureId, int teamId, MapImpl map, LivingCreature creature, int cretureXLocation, int cretureYLocation)
         {
             this.cretureYLocation = cretureYLocation;
             this.cretureXLocation = cretureXLocation;

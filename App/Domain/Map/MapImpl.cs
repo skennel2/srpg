@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Srpg.App.Domain.Unit;
 
 namespace Srpg.App.Domain.Map
 {
@@ -9,7 +10,7 @@ namespace Srpg.App.Domain.Map
         private readonly int ySize;
         private readonly int xSize;
         private Tile[,] tileArray;
-        private readonly Dictionary<int, MapOnALivingObject> creatures;
+        private readonly Dictionary<int, MapOnALivingCreature> creatures;
 
         public MapImpl(string name, int xSize, int ySize)
         {
@@ -23,26 +24,23 @@ namespace Srpg.App.Domain.Map
         public Tile[,] TileArray { get => tileArray; private set => tileArray = value; }
         public string Name => name;
 
-        public void SetTile(Tile tile, int x, int y)
-        {            
-            try
-            {
-                VetifySizeOver(x, y);
-
-                tileArray[x, y] = tile;
-            }
-            catch (System.ArgumentOutOfRangeException ex)
-            {
-                throw ex;
-            }
+        public void PutCreatureOn(LivingCreature creature, int teamId, int xLocation, int yLocation)
+        {
+            var creatureOnMap = new MapOnALivingCreature(creatures.Count + 1, teamId, this, creature, xLocation, yLocation);
+            this.creatures.Add(creatureOnMap.CreatureId, creatureOnMap);            
         }
 
         public bool CanCreatureMove(int creatureId, int x, int y)
         {
-            return creatures.ContainsKey(creatureId) && !IsSizeOver(x, y) && GetLivingObject(x, y) == null;
+            return creatures.ContainsKey(creatureId) && !IsSizeOver(x, y) && GetLivingCreature(x, y) == null;
         }
 
-        public void Fill(Tile defaultTile)
+        public MapOnALivingCreature GetLivingCreature(int x, int y)
+        {
+            return creatures.Values.FirstOrDefault(c=> c.CretureXLocation == x && c.CretureYLocation == y);                    
+        }
+
+        public void FillUpWith(Tile defaultTile)
         {
             if(defaultTile == null) throw new System.ArgumentNullException("defaultTile");
 
@@ -55,9 +53,17 @@ namespace Srpg.App.Domain.Map
             }
         }
 
-        public MapOnALivingObject GetLivingObject(int x, int y)
-        {
-            return creatures.Values.FirstOrDefault(c=> c.CretureXLocation == x && c.CretureYLocation == y);                    
+        public void SetTile(Tile tile, int x, int y)
+        {            
+            try
+            {
+                VetifySizeOver(x, y);
+                tileArray[x, y] = tile;
+            }
+            catch (System.ArgumentOutOfRangeException ex)
+            {
+                throw ex;
+            }
         }
 
         public void VetifySizeOver(int x, int y)

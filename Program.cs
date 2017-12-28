@@ -29,16 +29,17 @@ namespace Srpg
 
         public static void MapDrawTest()
         {
+            Console.Clear();
+
             var map = new MapImpl("test", 10, 10);
             var defaultTile = new Tile("12", true, new TileConsoleShape('□'));
             var tile2 = new Tile("23", true, new TileConsoleShape('◆'));
 
-            map.Fill(defaultTile);
+            map.FillUpWith(defaultTile);
             map.SetTile(tile2, 0, 0);
-            map.SetTile(tile2, 10, 9);
+            map.SetTile(tile2, 9, 9);
 
             var mapDrawer = new ConsoleMapDrawer(map);
-
             mapDrawer.ShowName();
             mapDrawer.Draw();
         } 
