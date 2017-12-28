@@ -1,8 +1,9 @@
+using Srpg.App.Domain.Common;
 using Srpg.App.Util;
 
 namespace Srpg.App.Domain.Unit
 {
-    public class PoisonDamageEffect : ICreatureStatusChanger
+    public class PoisonDamageEffect : ICreatureStatusChanger, IHaveAName
     {
         private readonly int minimumDamage;
         private readonly int maximumDamage;

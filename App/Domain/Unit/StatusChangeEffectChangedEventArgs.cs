@@ -12,7 +12,5 @@ namespace Srpg.App.Domain.Unit
         }
         public string EffectName { get; private set; }
         public bool isRemoved { get; private set; }
-
-
     }
 }

@@ -6,6 +6,7 @@ namespace Srpg.App.Util
     public static class RandomNumberGenerator
     {
         private static readonly RNGCryptoServiceProvider _generator = new RNGCryptoServiceProvider();
+        
         public static int NumberBetween(int minimumValue, int maximumValue)
         {
             byte[] randomNumber = new byte[1];

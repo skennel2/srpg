@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
+using Srpg.App.Domain.Common;
 using Srpg.App.Domain.Unit;
 
 namespace Srpg.App.Domain.Map
 {
-    public class MapImpl
+    public class MapImpl : IHaveAName
     {
         private readonly string name;
         private readonly int ySize;

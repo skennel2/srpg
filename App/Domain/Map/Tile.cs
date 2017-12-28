@@ -1,8 +1,9 @@
+using Srpg.App.Domain.Common;
 using Srpg.App.Domain;
 
 namespace Srpg.App.Domain.Map
 {
-    public class Tile
+    public class Tile : IHaveAName
     {
         private readonly string name;
         private readonly bool canCreatureLanding;

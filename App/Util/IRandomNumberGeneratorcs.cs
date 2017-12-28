@@ -1,7 +1,7 @@
 namespace prj.App.Util
 {
-    public class IRandomNumberGeneratorcs
+    public interface IRandomNumberGenerator
     {
-        
+        int NumberBetween(int minimumValue, int maximumValue);
     }
 }

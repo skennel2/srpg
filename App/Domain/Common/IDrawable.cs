@@ -1,4 +1,4 @@
-namespace Srpg.App.Domain
+namespace Srpg.App.Domain.Common
 {
     public interface IDrawable
     {
