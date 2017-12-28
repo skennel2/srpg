@@ -4,7 +4,7 @@ using Srpg.App.Domain.Common;
 
 namespace Srpg.App.Domain.Unit
 {
-    public class WarriorBase : LivingCreature, IHaveACombatSkill
+    public class WarriorBase : LivingCreature, IHaveCombatSkill
     {
         private ICombatSkill combatSkill;
 
