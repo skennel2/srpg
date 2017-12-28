@@ -16,9 +16,8 @@ namespace Srpg.App.Domain.CombatSkill
         override public void CastSkill(WarriorBase caster, LivingCreature targets)
         {
             int damage = RandomNumberGenerator.NumberBetween(MinimumDamage, MaximumDamage);
-            damage = (int)Math.Round(damage - (damage * targets.DepensiveRate));
-            targets.TakeADamage(caster, damage);
-
+            targets.TakeADamageWithDepensiveRate(caster, damage);
+            
             caster.RecoveryHealth((int)Math.Round(damage * vomitedRate));
         }
     }
