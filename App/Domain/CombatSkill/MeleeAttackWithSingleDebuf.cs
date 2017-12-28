@@ -1,0 +1,21 @@
+using Srpg.App.Domain.Unit;
+
+namespace Srpg.App.Domain.CombatSkill
+{
+    public class MeleeAttackWithSingleDebuf : MeleeAttack
+    {
+        private readonly TurnLimitedCreatureStatusChangerBase debuf ;
+
+        public MeleeAttackWithSingleDebuf(string name, int minimumDamage, int maximumDamage, TurnLimitedCreatureStatusChangerBase debuf) : base(name, minimumDamage, maximumDamage)
+        {
+            this.debuf = debuf;
+        }
+
+        override public void CastSkill(WarriorBase caster, LivingCreature target)
+        {
+            base.CastSkill(caster, target);
+            target.AddATemporaryEffect(caster, debuf);
+        }
+    }
+
+}
