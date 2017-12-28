@@ -3,7 +3,7 @@ using Srpg.App.Util;
 
 namespace Srpg.App.Domain.Unit
 {
-    public class PoisonDamageEffect : ICreatureStatusChanger, IHaveAName
+    public class PoisonDamageEffect : ICreatureStatusChanger
     {
         private readonly int minimumDamage;
         private readonly int maximumDamage;
