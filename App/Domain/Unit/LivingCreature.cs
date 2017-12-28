@@ -8,47 +8,62 @@ namespace Srpg.App.Domain.Unit
 {
     public delegate void StatusChangeEffectChangedEventHandler<StatusChangeEffectChangedEventArgs>(object sender, StatusChangeEffectChangedEventArgs args);
 
-    public abstract class LivingCreature : INotifyPropertyChanged, IHaveName, ICreatureBody
+    public abstract class LivingCreature : IHaveName, ICreatureBody, ICanGrowUp, INotifyPropertyChanged
     {
         private readonly long id;
         private readonly string name;
         private int maxHealthPoint;
         private int nowHealthPoint;
         private double depensiveRate;
-        private int nowLevel;   
+        private int level;   
+        private int experiencePoint;
         private bool isAlive;
         private readonly IList<TurnLimitedCreatureStatusChangerBase> effects;  
-        private readonly IDrawable creatureShape;
+        private readonly IShapable creatureShape;
 
-        public LivingCreature(long id, string name, int nowLevel, 
+        public LivingCreature(long id, string name, int level, int experiencePoint,
             int maxHealthPoint,
             int nowHealthPoint,
             double depensiveRate,
             List<TurnLimitedCreatureStatusChangerBase> effects,
-            IDrawable creatureShape)
+            IShapable creatureShape)
         {
             this.id = id;
             this.name = name;
-            this.NowLevel = nowLevel;
-            this.maxHealthPoint = maxHealthPoint;
+            this.Level = level;
+            this.experiencePoint = experiencePoint;
+            this.MaxHealthPoint = maxHealthPoint;
             this.NowHealthPoint = nowHealthPoint;
-            this.depensiveRate = depensiveRate;
+            this.DepensiveRate = depensiveRate;
             this.effects = effects;
             this.IsAlive = true;
             this.creatureShape = creatureShape; 
         }
 
         public string Name => name;
+
         public long Id => id;
-        public int NowLevel 
+
+        public int Level 
         { 
-            get => nowLevel;
+            get => level;
             private set
             {
-                nowLevel = value;
+                Level = value;
                 OnPropertyChange();   
             } 
         }
+
+        public int ExperiencePoint 
+        {
+            get => experiencePoint;
+            private set
+            {
+                this.experiencePoint = value;
+                OnPropertyChange();
+            }
+        }
+
         public int MaxHealthPoint 
         {
             get => maxHealthPoint; 
@@ -58,6 +73,7 @@ namespace Srpg.App.Domain.Unit
                 OnPropertyChange();   
             } 
         }       
+
         public int NowHealthPoint 
         { 
             get => nowHealthPoint; 
@@ -88,9 +104,13 @@ namespace Srpg.App.Domain.Unit
 
         public virtual void IncreaseLevel()
         {
-            this.NowLevel += 1;
-            OnPropertyChange();
+            this.Level += 1;
         }
+
+        public void AcquireExperiencePoint(int amount)
+        {
+            this.ExperiencePoint += amount;
+        }        
 
         public virtual void AddATemporaryEffect(LivingCreature sender, TurnLimitedCreatureStatusChangerBase effect)
         {
@@ -147,7 +167,7 @@ namespace Srpg.App.Domain.Unit
             TakeADamage(attacker, damage);
         }
 
-        private void OnPropertyChange([CallerMemberName]string propertyName="")
+        protected void OnPropertyChange([CallerMemberName]string propertyName="")
         {
             var args = new PropertyChangedEventArgs(propertyName);
             if(PropertyChanged != null)

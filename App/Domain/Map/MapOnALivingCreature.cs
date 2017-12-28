@@ -12,7 +12,6 @@ namespace Srpg.App.Domain.Map
         private int cretureXLocation;
         private int cretureYLocation;
         
-
         public MapOnALivingCreature(int creatureId, int teamId, MapImpl map, LivingCreature creature, int cretureXLocation, int cretureYLocation)
         {
             this.cretureYLocation = cretureYLocation;

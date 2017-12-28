@@ -7,9 +7,9 @@ namespace Srpg.App.Domain.Map
     {
         private readonly string name;
         private readonly bool canCreatureLanding;
-        private readonly IDrawable tileShape;
+        private readonly IShapable tileShape;
 
-        public Tile(string name, bool canCreatureLanding, IDrawable tileShape)
+        public Tile(string name, bool canCreatureLanding, IShapable tileShape)
         {
             this.tileShape = tileShape;
             this.canCreatureLanding = canCreatureLanding;
@@ -18,6 +18,6 @@ namespace Srpg.App.Domain.Map
 
         public string Name => name;
         public bool CanCreatureLanding => canCreatureLanding;
-        public IDrawable TileShape => tileShape;
+        public IShapable TileShape => tileShape;
     }
 }
