@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Srpg.App.Domain.Common;
@@ -19,6 +20,7 @@ namespace Srpg.App.Domain.Map
             this.xSize = xSize;
             this.ySize = ySize;
             tileArray = new Tile[xSize, ySize];
+            creatures = new Dictionary<int, MapOnALivingCreature>();
         }
 
         public Tile[,] TileArray { get => tileArray; private set => tileArray = value; }

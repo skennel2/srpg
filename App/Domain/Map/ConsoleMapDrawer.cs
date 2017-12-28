@@ -24,7 +24,16 @@ namespace Srpg.App.Domain.Map
             {
                 for (int y = 0; y < map.TileArray.GetLength(1); y++)
                 {
-                    map.TileArray[x, y].TileShape.Draw();
+                    var creature = map.GetLivingCreature(x, y);
+                    
+                    if(creature == null)
+                    {
+                        map.TileArray[x, y].TileShape.Draw();
+                    }
+                    else
+                    {
+                        creature.Creature.CreatureShape.Draw();                    
+                    }
                 }
 
                 Console.WriteLine();
