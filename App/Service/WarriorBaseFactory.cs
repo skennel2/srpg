@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Srpg.App.Domain.CombatSkill;
+using Srpg.App.Domain.Map;
 using Srpg.App.Domain.Unit;
 
 namespace Srpg.App.Service
@@ -20,11 +21,12 @@ namespace Srpg.App.Service
             warriorRepo = new Dictionary<string, WarriorBase>();
 
             warriorRepo.Add("test1", new WarriorBase(1, "test", 1, 1500, 1500, 0.05, 
-                new List<TurnLimitedCreatureStatusChangerBase>(), 
+                new List<TurnLimitedCreatureStatusChangerBase>(), new TileConsoleShape('☆'),
                 effectAttack));
 
             warriorRepo.Add("test2", new WarriorBase(2, "test2", 1, 1500, 1500, 0.05, 
                 new List<TurnLimitedCreatureStatusChangerBase>(),
+                new TileConsoleShape('☆'),
                 vomitedAttack));      
         } 
 

@@ -9,7 +9,8 @@ namespace Srpg.App.Domain.Unit
 
         public WarriorBase(long id, string name, int nowLevel, 
             int maxHealthPoint, int nowHealthPoint, double depensiveRate, 
-            List<TurnLimitedCreatureStatusChangerBase> effects, ICombatSkill combatSkill) : base(id, name, nowLevel, maxHealthPoint, nowHealthPoint, depensiveRate, effects)
+            List<TurnLimitedCreatureStatusChangerBase> effects, IDrawable creatureShape, ICombatSkill combatSkill) 
+                : base(id, name, nowLevel, maxHealthPoint, nowHealthPoint, depensiveRate, effects, creatureShape)
         {
             this.combatSkill = combatSkill;
         }

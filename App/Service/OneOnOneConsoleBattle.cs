@@ -40,9 +40,9 @@ namespace Srpg.App.Service
         {   
             WarriorBase warrior = sender as WarriorBase;
 
-            if(args.PropertyName == WarriorBase.NowHealthPointPropertyName)
+            if(args.PropertyName == nameof(WarriorBase.NowHealthPoint))
             {
-                Console.WriteLine(warrior.Name +"'s "+WarriorBase.NowHealthPointPropertyName + " : " + warrior.NowHealthPoint);
+                Console.WriteLine(warrior.Name +"'s "+ nameof(WarriorBase.NowHealthPoint) + " : " + warrior.NowHealthPoint);
             }
         }
 
