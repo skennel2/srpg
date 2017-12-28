@@ -8,7 +8,7 @@ namespace Srpg.App.Domain.Unit
 {
     public delegate void StatusChangeEffectChangedEventHandler<StatusChangeEffectChangedEventArgs>(object sender, StatusChangeEffectChangedEventArgs args);
 
-    public abstract class LivingCreature : INotifyPropertyChanged
+    public abstract class LivingCreature : INotifyPropertyChanged, IHaveAName
     {
         private readonly long id;
         private readonly string name;
