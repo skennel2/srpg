@@ -34,7 +34,7 @@ namespace Srpg
             WarriorBaseFactoryTest factory = new WarriorBaseFactoryTest();
             var w1 = factory.GetByName("test1");
 
-            var map = new MapImpl("test", 10, 10);
+            var map = new GridMap("test", 10, 10);
             var defaultTile = new Tile("12", true, new TileConsoleShape('□'));
             var tile2 = new Tile("23", true, new TileConsoleShape('◆'));
 
@@ -42,6 +42,9 @@ namespace Srpg
             map.SetTile(tile2, 0, 0);
             map.SetTile(tile2, 9, 9);
             map.PutCreatureOn(w1, 1, 1, 1);
+
+            var c = map.GetLivingCreatureAt(1,1);
+            c.MoveRight();
 
             var mapDrawer = new ConsoleMapDrawer(map);
             mapDrawer.ShowName();

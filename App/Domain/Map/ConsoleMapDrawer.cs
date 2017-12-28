@@ -5,9 +5,9 @@ namespace Srpg.App.Domain.Map
 {
     public class ConsoleMapDrawer : IDrawable
     {
-        private readonly MapImpl map;
+        private readonly GridMap map;
 
-        public ConsoleMapDrawer(MapImpl map)
+        public ConsoleMapDrawer(GridMap map)
         {
             this.map = map;
         }
@@ -24,7 +24,7 @@ namespace Srpg.App.Domain.Map
             {
                 for (int y = 0; y < map.TileArray.GetLength(1); y++)
                 {
-                    var creature = map.GetLivingCreature(x, y);
+                    var creature = map.GetLivingCreatureAt(x, y);
                     
                     if(creature == null)
                     {

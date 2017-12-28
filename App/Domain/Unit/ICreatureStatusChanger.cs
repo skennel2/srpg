@@ -6,6 +6,5 @@ namespace Srpg.App.Domain.Unit
     {
         CretureStatusChangerType EffectType { get; }
         void GiveAEffect(LivingCreature creature);
-        void RollbackCreature(LivingCreature creature);
     }
 }

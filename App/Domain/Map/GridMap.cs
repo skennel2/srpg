@@ -6,45 +6,47 @@ using Srpg.App.Domain.Unit;
 
 namespace Srpg.App.Domain.Map
 {
-    public class MapImpl : IHaveName
+    public class GridMap : IHaveName, IGrid
     {
         private readonly string name;
-        private readonly int ySize;
         private readonly int xSize;
+        private readonly int ySize;
         private Tile[,] tileArray;
-        private readonly Dictionary<int, MapOnALivingCreature> creatures;
+        private readonly Dictionary<int, LivingCreatureOnMap> creatures;
 
-        public MapImpl(string name, int xSize, int ySize)
+        public GridMap(string name, int xSize, int ySize)
         {
             this.name = name;
             this.xSize = xSize;
             this.ySize = ySize;
             tileArray = new Tile[xSize, ySize];
-            creatures = new Dictionary<int, MapOnALivingCreature>();
+            creatures = new Dictionary<int, LivingCreatureOnMap>();
         }
 
-        public Tile[,] TileArray { get => tileArray; private set => tileArray = value; }
         public string Name => name;
+        public int XSize => xSize;
+        public int YSize => ySize;
+        public Tile[,] TileArray { get => tileArray; private set => tileArray = value; }        
 
         public void PutCreatureOn(LivingCreature creature, int teamId, int xLocation, int yLocation)
         {
-            var creatureOnMap = new MapOnALivingCreature(creatures.Count + 1, teamId, this, creature, xLocation, yLocation);
+            var creatureOnMap = new LivingCreatureOnMap(creatures.Count + 1, teamId, this, creature, xLocation, yLocation);
             this.creatures.Add(creatureOnMap.CreatureId, creatureOnMap);            
         }
 
         public bool CanCreatureMove(int creatureId, int x, int y)
         {
-            return creatures.ContainsKey(creatureId) && !IsSizeOver(x, y) && GetLivingCreature(x, y) == null;
+            return creatures.ContainsKey(creatureId) && !IsSizeOver(x, y) && GetLivingCreatureAt(x, y) == null;
         }
 
-        public MapOnALivingCreature GetLivingCreature(int x, int y)
+        public LivingCreatureOnMap GetLivingCreatureAt(int x, int y)
         {
             return creatures.Values.FirstOrDefault(c=> c.CretureXLocation == x && c.CretureYLocation == y);                    
         }
 
         public void FillUpWith(Tile defaultTile)
         {
-            if(defaultTile == null) throw new System.ArgumentNullException("defaultTile");
+            if(defaultTile == null) throw new ArgumentNullException("defaultTile");
 
             for (int i = 0; i < tileArray.GetLength(0); i++)
             {
@@ -62,7 +64,7 @@ namespace Srpg.App.Domain.Map
                 VetifySizeOver(x, y);
                 tileArray[x, y] = tile;
             }
-            catch (System.ArgumentOutOfRangeException ex)
+            catch (ArgumentOutOfRangeException ex)
             {
                 throw ex;
             }
@@ -73,12 +75,12 @@ namespace Srpg.App.Domain.Map
             if(x >= xSize)
             {                
                 string exceptionMessage = "x size : " + xSize.ToString() + "but " + x.ToString();
-                throw new System.ArgumentOutOfRangeException("x", exceptionMessage);
+                throw new ArgumentOutOfRangeException("x", exceptionMessage);
             }
             if(y >= ySize)
             {                
                 string exceptionMessage = " y size : " + ySize.ToString()  + "but " + y.ToString();
-                throw new System.ArgumentOutOfRangeException("y", exceptionMessage);
+                throw new ArgumentOutOfRangeException("y", exceptionMessage);
             }
         }  
 

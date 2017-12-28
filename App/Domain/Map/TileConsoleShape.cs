@@ -3,7 +3,7 @@ using Srpg.App.Domain.Common;
 
 namespace Srpg.App.Domain.Map
 {
-    public class TileConsoleShape : IDrawable
+    public class TileConsoleShape : IShapable
     {
         private readonly char shape;
 
