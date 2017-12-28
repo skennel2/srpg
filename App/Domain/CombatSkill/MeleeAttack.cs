@@ -24,7 +24,7 @@ namespace Srpg.App.Domain.CombatSkill
         public virtual void CastSkill(WarriorBase caster, LivingCreature target)
         {
             int damage = RandomNumberGenerator.NumberBetween(minimumDamage, maximumDamage);
-            target.TakeADamageWithDepensiveRate(caster, damage);
+            target.TakeDamageWithDepensiveRate(caster, damage);
         }
     }
 }

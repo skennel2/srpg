@@ -156,21 +156,21 @@ namespace Srpg.App.Domain.Unit
             this.NowHealthPoint += amount;
         }
 
-        public void TakeADamage(int amount)
+        public void TakeDamage(int amount)
         {
             this.NowHealthPoint -= amount;
         }
 
-        public virtual void TakeADamage(WarriorBase attacker, int amount)
+        public virtual void TakeDamage(WarriorBase attacker, int amount)
         {
-            TakeADamage(amount);
+            TakeDamage(amount);
         }
 
-        public virtual void TakeADamageWithDepensiveRate(WarriorBase attacker, int amount)
+        public virtual void TakeDamageWithDepensiveRate(WarriorBase attacker, int amount)
         {
             int damage = (int)Math.Round(amount - (amount * this.DepensiveRate));
 
-            TakeADamage(attacker, damage);
+            TakeDamage(attacker, damage);
         }
 
         protected void OnPropertyChange([CallerMemberName]string propertyName="")

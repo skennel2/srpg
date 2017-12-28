@@ -30,28 +30,28 @@ namespace Srpg.App.Domain.Map
         public int CretureXLocation { get => cretureXLocation; private set => cretureXLocation = value; }
         public int CretureYLocation { get => cretureYLocation; private set => cretureYLocation = value; }
 
-        public void MoveLeft()
+        public void MoveRight()
         {
             int x = cretureXLocation;
             int y = cretureYLocation + 1;
             Move(x, y);
         }
 
-        public void MoveRight()
+        public void MoveLeft()
         {
             int x = cretureXLocation;
             int y = cretureYLocation - 1;
             Move(x, y);
         }
 
-        public void MoveUp()
+        public void MoveDown()
         {
             int x = cretureXLocation + 1;
             int y = cretureYLocation;
             Move(x, y);
         }
 
-        public void MoveDown()
+        public void MoveUp()
         {
             int x = cretureXLocation - 1;
             int y = cretureYLocation;

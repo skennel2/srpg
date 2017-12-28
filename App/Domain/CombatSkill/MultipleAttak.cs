@@ -25,7 +25,7 @@ namespace Srpg.App.Domain.CombatSkill
                 int damage = RandomNumberGenerator.NumberBetween(MinimumDamage, MaximumDamage);
                 damage = (int)Math.Round(damage - (damage * damageRate));
 
-                target.TakeADamageWithDepensiveRate(caster, damage);
+                target.TakeDamageWithDepensiveRate(caster, damage);
             }
         }
     }

@@ -44,7 +44,12 @@ namespace Srpg
             map.PutCreatureOn(w1, 1, 1, 1);
 
             var c = map.GetLivingCreatureAt(1,1);
-            c.MoveRight();
+            c.MoveDown();
+            c.MoveDown();
+            c.MoveDown();
+            c.MoveLeft();
+            c.MoveLeft();
+            Console.WriteLine(c.CretureXLocation.ToString() + "---" + c.CretureYLocation.ToString());
 
             var mapDrawer = new ConsoleMapDrawer(map);
             mapDrawer.ShowName();

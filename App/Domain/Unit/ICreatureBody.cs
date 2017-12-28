@@ -9,8 +9,8 @@ namespace Srpg.App.Domain.Unit
         double DepensiveRate {get;}
 
         void RecoveryHealth(int amount);
-        void TakeADamage(int amount);
-        void TakeADamage(WarriorBase attacker, int amount);
-        void TakeADamageWithDepensiveRate(WarriorBase attacker, int amount);
+        void TakeDamage(int amount);
+        void TakeDamage(WarriorBase attacker, int amount);
+        void TakeDamageWithDepensiveRate(WarriorBase attacker, int amount);
     }
 }

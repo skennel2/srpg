@@ -29,7 +29,7 @@ namespace Srpg.App.Domain.Unit
         public virtual void Attack(LivingCreature target)
         {
             combatSkill.CastSkill(this, target);
-        }        
+        }
 
         public virtual void ChangeCombatSkill(ICombatSkill combatSkill)
         {

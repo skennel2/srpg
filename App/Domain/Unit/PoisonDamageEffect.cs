@@ -24,7 +24,7 @@ namespace Srpg.App.Domain.Unit
         public void GiveAEffect(LivingCreature creature)
         {
             int damage = RandomNumberGenerator.NumberBetween(minimumDamage, maximumDamage);
-            creature.TakeADamage(null, damage);
+            creature.TakeDamage(null, damage);
         }
 
         public void RollbackCreature(LivingCreature creature)
