@@ -17,7 +17,6 @@ namespace Srpg.App.Domain.Map
             this.name = name;
             this.xSize = xSize;
             this.ySize = ySize;
-
             tileArray = new Tile[xSize, ySize];
         }
 
