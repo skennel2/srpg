@@ -8,13 +8,13 @@ namespace Srpg.App.Domain.Unit
 {
     public delegate void StatusChangeEffectChangedEventHandler<StatusChangeEffectChangedEventArgs>(object sender, StatusChangeEffectChangedEventArgs args);
 
-    public abstract class LivingCreature : INotifyPropertyChanged, IHaveName
+    public abstract class LivingCreature : INotifyPropertyChanged, IHaveName, ICreatureBody
     {
         private readonly long id;
         private readonly string name;
         private int maxHealthPoint;
-        private double depensiveRate;
         private int nowHealthPoint;
+        private double depensiveRate;
         private int nowLevel;   
         private bool isAlive;
         private readonly IList<TurnLimitedCreatureStatusChangerBase> effects;  
@@ -166,4 +166,13 @@ namespace Srpg.App.Domain.Unit
             }
         }
     }    
+
+    public interface ICreatureBody
+    {
+        int NowHealthPoint {get;}
+        int MaxHealthPoint {get;}
+        void RecoveryHealth(int amount);
+        void TakeADamage(LivingCreature attacker, int amount);
+        void TakeADamageWithDepensiveRate(LivingCreature attacker, int amount);
+    }
 }
