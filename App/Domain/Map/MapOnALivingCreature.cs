@@ -6,11 +6,12 @@ namespace Srpg.App.Domain.Map
     public class MapOnALivingCreature
     {
         private readonly int creatureId;
-        private readonly int teamId;        
-        private readonly LivingCreature creature;        
+        private readonly int teamId;
+        private readonly LivingCreature creature;
         private readonly MapImpl map;
         private int cretureXLocation;
         private int cretureYLocation;
+        
 
         public MapOnALivingCreature(int creatureId, int teamId, MapImpl map, LivingCreature creature, int cretureXLocation, int cretureYLocation)
         {
@@ -19,7 +20,7 @@ namespace Srpg.App.Domain.Map
             this.creature = creature;
             this.map = map;
             this.teamId = teamId;
-            this.creatureId = creatureId;
+            this.creatureId = creatureId;           
         }
 
         public int CreatureId => creatureId;
@@ -61,7 +62,7 @@ namespace Srpg.App.Domain.Map
         public void Move(int x, int y)
         {
             if (map.CanCreatureMove(creatureId, x, y))
-            {            
+            {
                 this.CretureXLocation = x;
                 this.CretureYLocation = y;
             }

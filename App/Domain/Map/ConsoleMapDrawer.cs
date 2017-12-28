@@ -23,7 +23,7 @@ namespace Srpg.App.Domain.Map
             {
                 for (int y = 0; y < map.TileArray.GetLength(1); y++)
                 {
-                    map.TileArray[x, y].Drawable.Draw();
+                    map.TileArray[x, y].TileShape.Draw();
                 }
 
                 Console.WriteLine();
