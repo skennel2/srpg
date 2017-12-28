@@ -16,12 +16,12 @@ namespace Srpg.App.Domain.Unit
         public CretureStatusChangerType EffectType { get; }
         public string Name => name;
 
-        public void GiveAEffect(LivingCreature creature)
+        public void GiveAEffect(ICreature creature)
         {
             creature.RecoveryHealth(amount);
         }
 
-        public void RollbackCreature(LivingCreature creature)
+        public void RollbackCreature(ICreature creature)
         {
             // Do Nothing..
         }

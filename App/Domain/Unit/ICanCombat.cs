@@ -3,10 +3,10 @@ using Srpg.App.Domain.Unit;
 
 namespace Srpg.App.Domain.Unit
 {
-    public interface IHaveCombatSkill
+    public interface ICanCombat
     {
         ICombatSkill CombatSkill { get; }
-        void Attack(LivingCreature target);
+        void Attack(ICreature target);
         void ChangeCombatSkill(ICombatSkill combatSkill);
     }
 }

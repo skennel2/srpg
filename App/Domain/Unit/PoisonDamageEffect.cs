@@ -21,13 +21,13 @@ namespace Srpg.App.Domain.Unit
         public int MaximumDamage => maximumDamage;
         public string Name => name;
 
-        public void GiveAEffect(LivingCreature creature)
+        public void GiveAEffect(ICreature creature)
         {
             int damage = RandomNumberGenerator.NumberBetween(minimumDamage, maximumDamage);
             creature.TakeDamage(null, damage);
         }
 
-        public void RollbackCreature(LivingCreature creature)
+        public void RollbackCreature(ICreature creature)
         {
 
         }

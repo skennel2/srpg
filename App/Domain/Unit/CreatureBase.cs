@@ -8,7 +8,7 @@ namespace Srpg.App.Domain.Unit
 {
     public delegate void StatusChangeEffectChangedEventHandler<StatusChangeEffectChangedEventArgs>(object sender, StatusChangeEffectChangedEventArgs args);
 
-    public abstract class LivingCreature : IHaveName, ICreatureBody, ICanGrowUp, INotifyPropertyChanged
+    public abstract class CreatureBase : ICreature, INotifyPropertyChanged
     {
         private readonly long id;
         private readonly string name;
@@ -21,7 +21,7 @@ namespace Srpg.App.Domain.Unit
         private readonly IList<TurnLimitedCreatureStatusChangerBase> effects;  
         private readonly IShapable creatureShape;
 
-        public LivingCreature(long id, string name, int level, int experiencePoint,
+        public CreatureBase(long id, string name, int level, int experiencePoint,
             int maxHealthPoint,
             int nowHealthPoint,
             double depensiveRate,
@@ -112,7 +112,7 @@ namespace Srpg.App.Domain.Unit
             this.ExperiencePoint += amount;
         }        
 
-        public virtual void AddATemporaryEffect(LivingCreature sender, TurnLimitedCreatureStatusChangerBase effect)
+        public virtual void AddATemporaryEffect(CreatureBase sender, TurnLimitedCreatureStatusChangerBase effect)
         {
             this.effects.Add(effect); 
             OnEffectListChange(effect.Name, false);
@@ -161,12 +161,12 @@ namespace Srpg.App.Domain.Unit
             this.NowHealthPoint -= amount;
         }
 
-        public virtual void TakeDamage(WarriorBase attacker, int amount)
+        public virtual void TakeDamage(IWarrior attacker, int amount)
         {
             TakeDamage(amount);
         }
 
-        public virtual void TakeDamageWithDepensiveRate(WarriorBase attacker, int amount)
+        public virtual void TakeDamageWithDepensiveRate(IWarrior attacker, int amount)
         {
             int damage = (int)Math.Round(amount - (amount * this.DepensiveRate));
 

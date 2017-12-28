@@ -4,7 +4,7 @@ using Srpg.App.Domain.Common;
 
 namespace Srpg.App.Domain.Unit
 {
-    public class WarriorBase : LivingCreature, IHaveCombatSkill
+    public class WarriorBase : CreatureBase, IWarrior
     {
         private ICombatSkill combatSkill;
 
@@ -18,7 +18,7 @@ namespace Srpg.App.Domain.Unit
 
         public ICombatSkill CombatSkill { get => combatSkill; }
 
-        public virtual void Attack(IEnumerable<LivingCreature> targets)
+        public virtual void Attack(IEnumerable<ICreature> targets)
         {
             foreach (var target in targets)
             {
@@ -26,7 +26,7 @@ namespace Srpg.App.Domain.Unit
             }
         }
 
-        public virtual void Attack(LivingCreature target)
+        public virtual void Attack(ICreature target)
         {
             combatSkill.CastSkill(this, target);
         }
