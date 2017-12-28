@@ -1,6 +1,6 @@
 namespace Srpg.App.Domain.Common
 {
-    public interface IHaveAName
+    public interface IHaveName
     {
         string Name { get; }
     }

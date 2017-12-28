@@ -3,7 +3,7 @@ using Srpg.App.Domain;
 
 namespace Srpg.App.Domain.Map
 {
-    public class Tile : IHaveAName
+    public class Tile : IHaveName
     {
         private readonly string name;
         private readonly bool canCreatureLanding;

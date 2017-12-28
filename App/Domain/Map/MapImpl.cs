@@ -6,7 +6,7 @@ using Srpg.App.Domain.Unit;
 
 namespace Srpg.App.Domain.Map
 {
-    public class MapImpl : IHaveAName
+    public class MapImpl : IHaveName
     {
         private readonly string name;
         private readonly int ySize;

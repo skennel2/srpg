@@ -4,7 +4,7 @@ using Srpg.App.Domain.Unit;
 
 namespace Srpg.App.Domain.CombatSkill
 {
-    public interface ICombatSkill : IHaveAName
+    public interface ICombatSkill : IHaveName
     {
         void CastSkill(WarriorBase caster, LivingCreature target);
     }
