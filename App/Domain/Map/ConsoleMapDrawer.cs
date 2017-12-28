@@ -19,11 +19,11 @@ namespace Srpg.App.Domain.Map
 
         public void Draw()
         {
-            for (int i = 0; i < map.TileArray.GetLength(0); i++)
+            for (int x = 0; x < map.TileArray.GetLength(0); x++)
             {
-                for (int j = 0; j < map.TileArray.GetLength(1); j++)
+                for (int y = 0; y < map.TileArray.GetLength(1); y++)
                 {
-                    map.TileArray[i, j].Drawable.Draw();
+                    map.TileArray[x, y].Drawable.Draw();
                 }
 
                 Console.WriteLine();
