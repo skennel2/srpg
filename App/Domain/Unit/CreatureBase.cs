@@ -112,7 +112,7 @@ namespace Srpg.App.Domain.Unit
             this.ExperiencePoint += amount;
         }        
 
-        public virtual void AddATemporaryEffect(CreatureBase sender, TurnLimitedCreatureStatusChangerBase effect)
+        public virtual void AddTemporaryEffect(ICanCombat sender, TurnLimitedCreatureStatusChangerBase effect)
         {
             this.effects.Add(effect); 
             OnEffectListChange(effect.Name, false);
@@ -161,12 +161,12 @@ namespace Srpg.App.Domain.Unit
             this.NowHealthPoint -= amount;
         }
 
-        public virtual void TakeDamage(IWarrior attacker, int amount)
+        public virtual void TakeDamage(ICanCombat attacker, int amount)
         {
             TakeDamage(amount);
         }
 
-        public virtual void TakeDamageWithDepensiveRate(IWarrior attacker, int amount)
+        public virtual void TakeDamageWithDepensiveRate(ICanCombat attacker, int amount)
         {
             int damage = (int)Math.Round(amount - (amount * this.DepensiveRate));
 
@@ -191,6 +191,11 @@ namespace Srpg.App.Domain.Unit
             {
                 EffectListChanged(this, args);
             }
+        }
+
+        public void Draw()
+        {
+            creatureShape.Draw();
         }
     }    
 }

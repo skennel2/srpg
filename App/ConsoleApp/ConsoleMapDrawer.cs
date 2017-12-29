@@ -1,7 +1,8 @@
 using System;
 using Srpg.App.Domain.Common;
+using Srpg.App.Domain.Map;
 
-namespace Srpg.App.Domain.Map
+namespace Srpg.App.ConsoleApp
 {
     public class ConsoleMapDrawer : IDrawable
     {
@@ -32,7 +33,7 @@ namespace Srpg.App.Domain.Map
                     }
                     else
                     {
-                        creature.Creature.CreatureShape.Draw();                    
+                        creature.Creature.Draw();                    
                     }
                 }
 

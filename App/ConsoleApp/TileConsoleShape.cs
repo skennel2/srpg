@@ -1,7 +1,7 @@
 using System;
 using Srpg.App.Domain.Common;
 
-namespace Srpg.App.Domain.Map
+namespace Srpg.App.ConsoleApp
 {
     public class TileConsoleShape : IShapable
     {

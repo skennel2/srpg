@@ -6,13 +6,13 @@ namespace Srpg.App.Domain.Unit
         {
         }
 
-        public override void GiveAEffect(LivingCreature creature)
+        public override void GiveAEffect(ICreature creature)
         {
             Effect.GiveAEffect(creature);
             RetentionTurn -= 1;
         }
 
-        public override void RollbackCreature(LivingCreature creature)
+        public override void RollbackCreature(ICreature creature)
         {
         
         }

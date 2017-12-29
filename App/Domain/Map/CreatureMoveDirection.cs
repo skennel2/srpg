@@ -1,4 +1,4 @@
-namespace prj.App.Domain.Map
+namespace Srpg.App.Domain.Map
 {
     public enum CreatureMoveDirection
     {

@@ -15,9 +15,9 @@ namespace Srpg.App.Domain.Unit
             this.IsAlreadyTaken = false;
         }
 
-        public abstract void GiveAEffect(LivingCreature creature);
+        public abstract void GiveAEffect(ICreature creature);
 
-        public abstract void RollbackCreature(LivingCreature creature);
+        public abstract void RollbackCreature(ICreature creature);
 
         public bool IsExpired
         {
@@ -25,7 +25,6 @@ namespace Srpg.App.Domain.Unit
         }
 
         public CretureStatusChangerType EffectType => Effect.EffectType;
-
         public string Name => Effect.Name;
         public ICreatureStatusChanger Effect => effect;
         public int RetentionTurn { get => retentionTurn; set => retentionTurn = value; }

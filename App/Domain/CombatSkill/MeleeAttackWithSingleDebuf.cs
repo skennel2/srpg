@@ -11,10 +11,10 @@ namespace Srpg.App.Domain.CombatSkill
             this.debuf = debuf;
         }
 
-        override public void CastSkill(WarriorBase caster, LivingCreature target)
+        override public void CastSkill(ICanCombat caster, ICreature target)
         {
             base.CastSkill(caster, target);
-            target.AddATemporaryEffect(caster, debuf);
+            target.AddTemporaryEffect(caster, debuf);
         }
     }
 

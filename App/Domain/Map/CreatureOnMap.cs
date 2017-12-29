@@ -3,29 +3,29 @@ using Srpg.App.Domain.Unit;
 
 namespace Srpg.App.Domain.Map
 {
-    public class LivingCreatureOnMap : IGridMovable
+    public class CreatureOnMap : IGridMovable
     {
         private readonly int creatureId;
         private readonly int teamId;
-        private readonly LivingCreature creature;
+        private readonly ICreature creature;
         private readonly GridMap map;
         private int cretureXLocation;
         private int cretureYLocation;
-        
-        public LivingCreatureOnMap(int creatureId, int teamId, GridMap map, LivingCreature creature, int cretureXLocation, int cretureYLocation)
+
+        public CreatureOnMap(int creatureId, int teamId, GridMap map, ICreature creature, int cretureXLocation, int cretureYLocation)
         {
             this.cretureYLocation = cretureYLocation;
             this.cretureXLocation = cretureXLocation;
             this.creature = creature;
             this.map = map;
             this.teamId = teamId;
-            this.creatureId = creatureId;           
+            this.creatureId = creatureId;
         }
 
         public int CreatureId => creatureId;
         public int TeamId => teamId;
         public GridMap Map => map;
-        public LivingCreature Creature => creature;
+        public ICreature Creature => creature;
 
         public int CretureXLocation { get => cretureXLocation; private set => cretureXLocation = value; }
         public int CretureYLocation { get => cretureYLocation; private set => cretureYLocation = value; }

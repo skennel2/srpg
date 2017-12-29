@@ -12,7 +12,7 @@ namespace Srpg.App.Domain.Map
         private readonly int xSize;
         private readonly int ySize;
         private Tile[,] tileArray;
-        private readonly Dictionary<int, LivingCreatureOnMap> creatures;
+        private readonly Dictionary<int, CreatureOnMap> creatures;
 
         public GridMap(string name, int xSize, int ySize)
         {
@@ -20,7 +20,7 @@ namespace Srpg.App.Domain.Map
             this.xSize = xSize;
             this.ySize = ySize;
             tileArray = new Tile[xSize, ySize];
-            creatures = new Dictionary<int, LivingCreatureOnMap>();
+            creatures = new Dictionary<int, CreatureOnMap>();
         }
 
         public string Name => name;
@@ -28,9 +28,9 @@ namespace Srpg.App.Domain.Map
         public int YSize => ySize;
         public Tile[,] TileArray { get => tileArray; private set => tileArray = value; }        
 
-        public void PutCreatureOn(LivingCreature creature, int teamId, int xLocation, int yLocation)
+        public void PutCreatureOn(ICreature creature, int teamId, int xLocation, int yLocation)
         {
-            var creatureOnMap = new LivingCreatureOnMap(creatures.Count + 1, teamId, this, creature, xLocation, yLocation);
+            var creatureOnMap = new CreatureOnMap(creatures.Count + 1, teamId, this, creature, xLocation, yLocation);
             this.creatures.Add(creatureOnMap.CreatureId, creatureOnMap);            
         }
 
@@ -39,7 +39,7 @@ namespace Srpg.App.Domain.Map
             return creatures.ContainsKey(creatureId) && !IsSizeOver(x, y) && GetLivingCreatureAt(x, y) == null;
         }
 
-        public LivingCreatureOnMap GetLivingCreatureAt(int x, int y)
+        public CreatureOnMap GetLivingCreatureAt(int x, int y)
         {
             return creatures.Values.FirstOrDefault(c=> c.CretureXLocation == x && c.CretureYLocation == y);                    
         }

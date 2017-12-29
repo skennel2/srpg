@@ -5,6 +5,6 @@ namespace Srpg.App.Domain.Unit
     public interface ICreatureStatusChanger : IHaveName
     {
         CretureStatusChangerType EffectType { get; }
-        void GiveAEffect(LivingCreature creature);
+        void GiveAEffect(ICreature creature);
     }
 }

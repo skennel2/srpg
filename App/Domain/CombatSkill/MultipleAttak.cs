@@ -18,7 +18,7 @@ namespace Srpg.App.Domain.CombatSkill
         public int AttackTimes => attackTimes;
         public double DamageRate => damageRate;
 
-        override public void CastSkill(WarriorBase caster, LivingCreature target)
+        override public void CastSkill(ICanCombat caster, ICreature target)
         {
             for (int i = 0; i < attackTimes; i++)
             {

@@ -13,12 +13,15 @@ namespace Srpg.App.Domain.CombatSkill
             this.vomitedRate = vomitedRate;
         }
 
-        override public void CastSkill(WarriorBase caster, LivingCreature targets)
+        override public void CastSkill(ICanCombat caster, ICreature targets)
         {
             int damage = RandomNumberGenerator.NumberBetween(MinimumDamage, MaximumDamage);
             targets.TakeDamageWithDepensiveRate(caster, damage);
             
-            caster.RecoveryHealth((int)Math.Round(damage * vomitedRate));
+            if(caster is IPhysicalBody)
+            {
+                (caster as IPhysicalBody).RecoveryHealth((int)Math.Round(damage * vomitedRate));
+            }
         }
     }
 }
