@@ -1,4 +1,4 @@
-namespace Srpg.App.Domain.Unit
+namespace Srpg.App.Domain.Unit.Effect
 {
     public class HealthPointRecoveryEffect : ICreatureStatusChanger
     {

@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using Srpg.App.ConsoleApp;
 using Srpg.App.Domain.CombatSkill;
 using Srpg.App.Domain.Map;
 using Srpg.App.Domain.Unit;
+using Srpg.App.Domain.Unit.Effect;
 
 namespace Srpg.App.Service
 {

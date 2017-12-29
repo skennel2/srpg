@@ -1,7 +1,7 @@
 using Srpg.App.Domain.Common;
 using Srpg.App.Util;
 
-namespace Srpg.App.Domain.Unit
+namespace Srpg.App.Domain.Unit.Effect
 {
     public class PoisonDamageEffect : ICreatureStatusChanger
     {

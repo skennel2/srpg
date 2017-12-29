@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Srpg.App.ConsoleApp;
 using Srpg.App.Domain.Map;
 using Srpg.App.Service;
 

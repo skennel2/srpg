@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Srpg.App.Domain.Common;
 using Srpg.App.Domain.Unit;
 
 namespace Srpg.App.Domain.Map
 {
-    public class GridMap : IHaveName, IGrid
+
+    public class GridMap : IGridMap
     {
         private readonly string name;
         private readonly int xSize;
@@ -31,6 +31,7 @@ namespace Srpg.App.Domain.Map
         public void PutCreatureOn(ICreature creature, int teamId, int xLocation, int yLocation)
         {
             var creatureOnMap = new CreatureOnMap(creatures.Count + 1, teamId, this, creature, xLocation, yLocation);
+            
             this.creatures.Add(creatureOnMap.CreatureId, creatureOnMap);            
         }
 
@@ -92,6 +93,16 @@ namespace Srpg.App.Domain.Map
             }
             
             return false;
-        }                
+        }
+
+        public bool IsAbleToLanding(int x, int y)
+        {
+            return GetTile(x, y).CanCreatureLanding;
+        }
+
+        public Tile GetTile(int x, int y)
+        {
+            return tileArray[x, y];
+        }
     }
 }

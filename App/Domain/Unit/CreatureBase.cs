@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using System.Runtime.CompilerServices;
 using Srpg.App.Domain.Common;
+using Srpg.App.Domain.Unit.Effect;
 
 namespace Srpg.App.Domain.Unit
 {

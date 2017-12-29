@@ -1,6 +1,6 @@
 using System;
 
-namespace Srpg.App.Domain.Unit
+namespace Srpg.App.Domain.Unit.Effect
 {
     public abstract class TurnLimitedCreatureStatusChangerBase : ICreatureStatusChanger
     {

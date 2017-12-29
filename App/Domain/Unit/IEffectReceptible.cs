@@ -1,3 +1,5 @@
+using Srpg.App.Domain.Unit.Effect;
+
 namespace Srpg.App.Domain.Unit
 {
     public interface IEffectReceptible

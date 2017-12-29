@@ -1,3 +1,5 @@
+using Srpg.App.Domain.Common;
+
 namespace Srpg.App.Test
 {
     public class TestResolutionRoot : IResolutionRoot

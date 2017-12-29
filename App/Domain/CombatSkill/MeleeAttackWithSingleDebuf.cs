@@ -1,4 +1,5 @@
 using Srpg.App.Domain.Unit;
+using Srpg.App.Domain.Unit.Effect;
 
 namespace Srpg.App.Domain.CombatSkill
 {
