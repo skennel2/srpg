@@ -1,6 +1,6 @@
 namespace Srpg.App.Domain.Common
 {
-    public interface IResolutionRoot
+    public interface ICompositionRoot
     {
         void SetUp();
         void Run();

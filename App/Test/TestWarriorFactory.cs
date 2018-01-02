@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Srpg.App.Domain.Common;
 using Srpg.App.Domain.Unit;
+using System;
 
 namespace Srpg.App.Test
 {
@@ -10,17 +11,25 @@ namespace Srpg.App.Test
 
         public IWarrior GetByKey(long key)
         {
-            if(repository.ContainsKey(key))
-            {
-                return repository[key];
+            if(!repository.ContainsKey(key))
+            {   
+                throw new KeyNotFoundException();
             }
 
-            return null;
+            return repository[key];
         }
 
         public IWarrior GetByName(string name)
         {
-            throw new System.NotImplementedException();
+            foreach (var item in repository)
+            {
+                if(item.Value.Name == name)
+                {
+                    return item.Value;
+                }
+            }
+
+            throw new KeyNotFoundException();
         }
     }
 }

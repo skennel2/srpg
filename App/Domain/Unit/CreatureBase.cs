@@ -178,10 +178,8 @@ namespace Srpg.App.Domain.Unit
         {
             var args = new PropertyChangedEventArgs(propertyName);
 
-            if(PropertyChanged != null)
-            {
-                PropertyChanged(this, args);
-            }
+            PropertyChanged?.Invoke(this, args);
+            
         }
 
         private void OnEffectListChange(string effectName, bool isRemoved)
@@ -191,7 +189,7 @@ namespace Srpg.App.Domain.Unit
             if(PropertyChanged != null)
             {
                 EffectListChanged(this, args);
-            }
+            }   
         }
 
         public void Draw()
