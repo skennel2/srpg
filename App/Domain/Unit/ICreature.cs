@@ -3,7 +3,7 @@ using Srpg.App.Domain.Common;
 
 namespace Srpg.App.Domain.Unit
 {
-    public interface ICreature: IEntity<long>, IHaveName, IPhysicalBody, ICanGrowUp, IEffectReceptible, IShapable
+    public interface ICreature: IEntity<long>, IHaveName, IPhysicalBody, ICanGrowUp, IShapable
     {
          
     }

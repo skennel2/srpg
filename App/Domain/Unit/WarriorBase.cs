@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Srpg.App.Domain.CombatSkill;
 using Srpg.App.Domain.Common;
-using Srpg.App.Domain.Unit.Effect;
 
 namespace Srpg.App.Domain.Unit
 {
@@ -10,9 +9,8 @@ namespace Srpg.App.Domain.Unit
         private ICombatSkill combatSkill;
 
         public WarriorBase(long id, string name, int nowLevel, int experiencePoint,
-            int maxHealthPoint, int nowHealthPoint, double depensiveRate, 
-            List<TurnLimitedCreatureStatusChangerBase> effects, IShapable creatureShape, ICombatSkill combatSkill) 
-                : base(id, name, nowLevel, experiencePoint, maxHealthPoint, nowHealthPoint, depensiveRate, effects, creatureShape)
+            int maxHealthPoint, int nowHealthPoint, double depensiveRate, IShapable creatureShape, ICombatSkill combatSkill) 
+                : base(id, name, nowLevel, experiencePoint, maxHealthPoint, nowHealthPoint, depensiveRate, creatureShape)
         {
             this.combatSkill = combatSkill;
         }

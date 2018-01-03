@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System;
 using System.Runtime.CompilerServices;
 using Srpg.App.Domain.Common;
-using Srpg.App.Domain.Unit.Effect;
 
 namespace Srpg.App.Domain.Unit
 {
@@ -19,14 +18,12 @@ namespace Srpg.App.Domain.Unit
         private int level;   
         private int experiencePoint;
         private bool isAlive;
-        private readonly IList<TurnLimitedCreatureStatusChangerBase> effects;  
         private readonly IShapable creatureShape;
 
         public CreatureBase(long id, string name, int level, int experiencePoint,
             int maxHealthPoint,
             int nowHealthPoint,
             double depensiveRate,
-            List<TurnLimitedCreatureStatusChangerBase> effects,
             IShapable creatureShape)
         {
             this.id = id;
@@ -36,13 +33,11 @@ namespace Srpg.App.Domain.Unit
             this.MaxHealthPoint = maxHealthPoint;
             this.NowHealthPoint = nowHealthPoint;
             this.DepensiveRate = depensiveRate;
-            this.effects = effects;
             this.IsAlive = true;
             this.creatureShape = creatureShape; 
         }
 
         public string Name => name;
-
         public long Id => id;
 
         public int Level 
@@ -113,43 +108,9 @@ namespace Srpg.App.Domain.Unit
             this.ExperiencePoint += amount;
         }        
 
-        public virtual void AddTemporaryEffect(ICanCombat sender, TurnLimitedCreatureStatusChangerBase effect)
-        {
-            this.effects.Add(effect); 
-            OnEffectListChange(effect.Name, false);
-        }
-
-        public virtual void RemoveTemporaryEffect(TurnLimitedCreatureStatusChangerBase effect)
-        {
-            if(effects.Contains(effect))
-            {
-                this.effects.Remove(effect);
-                effect.RollbackCreature(this);
-                OnEffectListChange(effect.Name, true);
-            }
-        }
-
         public void UpdateStatus()
         {
-            TurnLimitedCreatureStatusChangerBase effectRemove = null;
-            foreach(var effect in effects)
-            {
-                if(effect.IsExpired)
-                {
-                    effectRemove = effect;
-                    effect.RollbackCreature(this);
-                }
-                else
-                {
-                    effect.GiveAEffect(this);
-                }
-            }
 
-            if(effectRemove != null)
-            {
-                effects.Remove(effectRemove);
-                OnEffectListChange(effectRemove.Name, true); 
-            } 
         }
 
         public virtual void RecoveryHealth(int amount)
@@ -180,16 +141,6 @@ namespace Srpg.App.Domain.Unit
 
             PropertyChanged?.Invoke(this, args);
             
-        }
-
-        private void OnEffectListChange(string effectName, bool isRemoved)
-        {
-            var args = new StatusChangeEffectChangedEventArgs(effectName, isRemoved);
-
-            if(PropertyChanged != null)
-            {
-                EffectListChanged(this, args);
-            }   
         }
 
         public void Draw()

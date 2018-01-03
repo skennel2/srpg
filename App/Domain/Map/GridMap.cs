@@ -45,6 +45,11 @@ namespace Srpg.App.Domain.Map
             return creatures.Values.FirstOrDefault(c=> c.CretureXLocation == x && c.CretureYLocation == y);                    
         }
 
+        public CreatureOnMap GetLivingCreature(int creatureId)
+        {
+            return creatures[creatureId];
+        }
+
         public void FillUpWith(Tile defaultTile)
         {
             if(defaultTile == null) throw new ArgumentNullException("defaultTile");
@@ -103,6 +108,14 @@ namespace Srpg.App.Domain.Map
         public Tile GetTile(int x, int y)
         {
             return tileArray[x, y];
+        }
+    }
+
+    public class TurnBattleGameRule
+    {   
+        public TurnBattleGameRule(GridMap map, List<IWarrior> ourTeam, List<IWarrior> enemyTeam)
+        {
+            
         }
     }
 }
