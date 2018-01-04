@@ -18,10 +18,7 @@ namespace Srpg.App.Domain.Map
 
         public void Execute()
         {
-            if (direction == CreatureMoveDirection.Up)
-            {
-                creature.MoveUp();
-            }
+            creature.Move(direction);
         }
     }
 }

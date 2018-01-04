@@ -6,5 +6,6 @@ namespace Srpg.App.Domain.Map
         void MoveDown();
         void MoveLeft();
         void MoveRight();
+        void Move(CreatureMoveDirection direction);
     }
 }

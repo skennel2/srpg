@@ -6,9 +6,9 @@ namespace Srpg.App.ConsoleApp
 {
     public class ConsoleMapDrawer : IDrawable
     {
-        private readonly GridMap map;
+        private readonly IGridMap map;
 
-        public ConsoleMapDrawer(GridMap map)
+        public ConsoleMapDrawer(IGridMap map)
         {
             this.map = map;
         }
@@ -21,23 +21,21 @@ namespace Srpg.App.ConsoleApp
 
         public void Draw()
         {
-            for (int x = 0; x < map.TileArray.GetLength(0); x++)
-            {
-                for (int y = 0; y < map.TileArray.GetLength(1); y++)
-                {
-                    var creature = map.GetLivingCreatureAt(x, y);
-                    
-                    if(creature == null)
-                    {
-                        map.TileArray[x, y].TileShape.Draw();
-                    }
-                    else
-                    {
-                        creature.Creature.Draw();                    
-                    }
-                }
+            int xPosition = 0;
+            int yPosition = 0;
 
-                Console.WriteLine();
+            for (int i = 0; i < map.XSize * map.YSize; i++)
+            {
+                map.GetTile(xPosition, yPosition).TileShape.Draw();
+
+                xPosition++;
+
+                if(xPosition >= map.XSize)
+                {
+                    xPosition = 0;
+                    yPosition++;
+                    Console.WriteLine();
+                }
             }
         }
     }

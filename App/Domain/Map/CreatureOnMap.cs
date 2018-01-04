@@ -8,11 +8,11 @@ namespace Srpg.App.Domain.Map
         private readonly int creatureId;
         private readonly int teamId;
         private readonly ICreature creature;
-        private readonly GridMap map;
+        private readonly IGridMap map;
         private int cretureXLocation;
         private int cretureYLocation;
 
-        public CreatureOnMap(int creatureId, int teamId, GridMap map, ICreature creature, int cretureXLocation, int cretureYLocation)
+        public CreatureOnMap(int creatureId, int teamId, IGridMap map, ICreature creature, int cretureXLocation, int cretureYLocation)
         {
             this.cretureYLocation = cretureYLocation;
             this.cretureXLocation = cretureXLocation;
@@ -24,7 +24,7 @@ namespace Srpg.App.Domain.Map
 
         public int CreatureId => creatureId;
         public int TeamId => teamId;
-        public GridMap Map => map;
+        public IGridMap Map => map;
         public ICreature Creature => creature;
 
         public int CretureXLocation { get => cretureXLocation; private set => cretureXLocation = value; }
@@ -32,39 +32,56 @@ namespace Srpg.App.Domain.Map
 
         public void MoveRight()
         {
-            int x = cretureXLocation;
-            int y = cretureYLocation + 1;
-            Move(x, y);
-        }
-
-        public void MoveLeft()
-        {
-            int x = cretureXLocation;
-            int y = cretureYLocation - 1;
-            Move(x, y);
-        }
-
-        public void MoveDown()
-        {
             int x = cretureXLocation + 1;
             int y = cretureYLocation;
             Move(x, y);
         }
 
-        public void MoveUp()
+        public void MoveLeft()
         {
             int x = cretureXLocation - 1;
             int y = cretureYLocation;
             Move(x, y);
         }
 
+        public void MoveDown()
+        {
+            int x = cretureXLocation;
+            int y = cretureYLocation + 1;
+            Move(x, y);
+        }
+
+        public void MoveUp()
+        {
+            int x = cretureXLocation;
+            int y = cretureYLocation - 1;
+            Move(x, y);
+        }
+
+        public void Move(CreatureMoveDirection direction)
+        {
+            if(direction == CreatureMoveDirection.Up)
+            {
+                MoveUp();
+            }
+            else if(direction == CreatureMoveDirection.Down)
+            {
+                MoveDown();
+            }
+            else if(direction == CreatureMoveDirection.Left)
+            {
+                MoveLeft();
+            }
+            else if(direction == CreatureMoveDirection.Right)
+            {
+                MoveRight();
+            }
+        }
+
         private void Move(int x, int y)
         {
-            if (map.CanCreatureMove(creatureId, x, y))
-            {
-                this.CretureXLocation = x;
-                this.CretureYLocation = y;
-            }
+            this.CretureXLocation = x;
+            this.CretureYLocation = y;
         }
     }
 }
