@@ -58,10 +58,7 @@ namespace Srpg.App.Test
             {
                 c.Execute();
             }
-
-            //battleState.GetCreatureAt(0,1).MoveDown();
-
-
+            
             battleState.Render();
         }
 

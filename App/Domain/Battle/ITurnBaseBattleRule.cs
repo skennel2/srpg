@@ -15,5 +15,6 @@ namespace Srpg.App.Domain.Battle
         void JoinToBattle(int teamId, IWarrior warrior, int xLocation, int yLocation);
         List<ICommand> GetAbailableCommands(int creatureId);
         void ExcuteCommand(ICommand command);
+        void Update();
     }
 }
