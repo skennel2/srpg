@@ -1,20 +1,25 @@
 using Srpg.App.Domain.Common;
+using Srpg.App.Domain.Map;
 
-namespace Srpg.App.Domain.Map
+namespace Srpg.App.Domain.Battle
 {
     public class CretureOnMapMoveCommand : ICommand
     {
         private readonly CreatureMoveDirection direction;
-        private readonly CreatureOnMap creature;
+        private readonly IGridMovable creature;
 
-        public CretureOnMapMoveCommand(CreatureOnMap creature, CreatureMoveDirection direction)
+        public CretureOnMapMoveCommand()
+        {
+        }
+
+        public CretureOnMapMoveCommand(IGridMovable creature, CreatureMoveDirection direction)
         {
             this.creature = creature;
             this.direction = direction;
         }
 
         public CreatureMoveDirection Direction => direction;
-        public CreatureOnMap Creature => creature;
+        public IGridMovable Creature => creature;
 
         public void Execute()
         {

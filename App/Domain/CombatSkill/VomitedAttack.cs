@@ -25,3 +25,4 @@ namespace Srpg.App.Domain.CombatSkill
         }
     }
 }
+

@@ -1,19 +1,20 @@
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Srpg.App.Domain.Common;
+using Srpg.App.Domain.Map;
 using Srpg.App.Domain.Unit;
 
-namespace Srpg.App.Domain.Map
+namespace Srpg.App.Domain.Battle
 {
-    public class BattleOnGridMap : IState
+    public class BattleState : IState
     {
         private int nowTurn;
         private readonly List<CreatureOnMap> creatures;
         private readonly IGridMap map;
         private readonly int playerTeamId;
 
-        public BattleOnGridMap(int nowTurn, IGridMap map, int playerTeamId)
+        public BattleState(int nowTurn, IGridMap map, int playerTeamId)
         {
             this.nowTurn = nowTurn;
             this.map = map;
@@ -25,13 +26,13 @@ namespace Srpg.App.Domain.Map
         public IGridMap Map => map;
         public int PlayerTeamId => playerTeamId;
 
-        public void AddWarrior(int teamId, IWarrior warrior, int xLocation, int yLocation)
+        public void JoinToBattle(int teamId, IWarrior warrior, int xLocation, int yLocation)
         {
-            if(creatures.Count > map.XSize * map.YSize) 
+            if (creatures.Count > map.XSize * map.YSize)
             {
                 throw new OverflowException();
             }
-            if(GetCreatureAt(xLocation, yLocation) != null)
+            if (GetCreatureAt(xLocation, yLocation) != null)
             {
                 throw new Exception();
             }
@@ -42,12 +43,12 @@ namespace Srpg.App.Domain.Map
 
         public CreatureOnMap GetCreature(int creatureId)
         {
-            return creatures.FirstOrDefault(c=> c.CreatureId == creatureId);
+            return creatures.FirstOrDefault(c => c.CreatureId == creatureId);
         }
 
         public CreatureOnMap GetCreatureAt(int x, int y)
         {
-            return creatures.FirstOrDefault(c=> c.CretureXLocation == x && c.CretureYLocation == y);
+            return creatures.FirstOrDefault(c => c.CretureXLocation == x && c.CretureYLocation == y);
         }
 
         public List<ICommand> GetCommandList(int creatureId)
@@ -55,24 +56,24 @@ namespace Srpg.App.Domain.Map
             List<ICommand> commandList = new List<ICommand>();
 
             var creature = GetCreature(creatureId);
-            if(creature != null)
+            if (creature != null)
             {
-                if(IsCreatureCanMove(creature, CreatureMoveDirection.Right))
+                if (IsCreatureCanMove(creature, CreatureMoveDirection.Right))
                 {
                     commandList.Add(new CretureOnMapMoveCommand(creature, CreatureMoveDirection.Right));
                 }
-                if(IsCreatureCanMove(creature, CreatureMoveDirection.Left))
+                if (IsCreatureCanMove(creature, CreatureMoveDirection.Left))
                 {
                     commandList.Add(new CretureOnMapMoveCommand(creature, CreatureMoveDirection.Left));
                 }
-                if(IsCreatureCanMove(creature, CreatureMoveDirection.Down))
+                if (IsCreatureCanMove(creature, CreatureMoveDirection.Down))
                 {
                     commandList.Add(new CretureOnMapMoveCommand(creature, CreatureMoveDirection.Down));
                 }
-                if(IsCreatureCanMove(creature, CreatureMoveDirection.Up))
+                if (IsCreatureCanMove(creature, CreatureMoveDirection.Up))
                 {
                     commandList.Add(new CretureOnMapMoveCommand(creature, CreatureMoveDirection.Up));
-                } 
+                }
             }
 
             return commandList;
@@ -83,28 +84,28 @@ namespace Srpg.App.Domain.Map
             int newXpos = creature.CretureXLocation;
             int newYpos = creature.CretureYLocation;
 
-            if(direction == CreatureMoveDirection.Up)
+            if (direction == CreatureMoveDirection.Up)
             {
                 newYpos -= 1;
             }
-            else if(direction == CreatureMoveDirection.Down)
+            else if (direction == CreatureMoveDirection.Down)
             {
-                newYpos += 1;    
+                newYpos += 1;
             }
-            else if(direction == CreatureMoveDirection.Left)
+            else if (direction == CreatureMoveDirection.Left)
             {
                 newXpos -= 1;
             }
-            else if(direction == CreatureMoveDirection.Right)
+            else if (direction == CreatureMoveDirection.Right)
             {
                 newXpos += 1;
-            }  
+            }
 
-            if(GetCreatureAt(newXpos, newYpos) != null)
+            if (GetCreatureAt(newXpos, newYpos) != null)
             {
                 return false;
-            }             
-            if(!map.IsAbleToLanding(newXpos, newYpos))
+            }
+            if (!map.IsAbleToLanding(newXpos, newYpos))
             {
                 return false;
             }
@@ -116,7 +117,7 @@ namespace Srpg.App.Domain.Map
         {
             IGridMovable moveable = GetCreature(creatureId);
 
-            if(moveable == null)
+            if (moveable == null)
             {
                 return;
             }
@@ -126,7 +127,7 @@ namespace Srpg.App.Domain.Map
 
         public void OnEnter()
         {
-            
+
         }
 
         public void Render()
@@ -137,7 +138,7 @@ namespace Srpg.App.Domain.Map
             for (int i = 0; i < map.XSize * map.YSize; i++)
             {
                 var creature = GetCreatureAt(xPosition, yPosition);
-                if(creature == null)
+                if (creature == null)
                 {
                     map.GetTile(xPosition, yPosition).TileShape.Draw();
                 }
@@ -148,7 +149,7 @@ namespace Srpg.App.Domain.Map
 
                 xPosition++;
 
-                if(xPosition >= map.XSize)
+                if (xPosition >= map.XSize)
                 {
                     xPosition = 0;
                     yPosition++;
@@ -159,12 +160,88 @@ namespace Srpg.App.Domain.Map
 
         public void Update()
         {
-            
+
         }
 
         public void OnExit()
         {
-            
+
+        }
+    }
+
+    public class GridMoveState : IState
+    {
+        private readonly IGridMap map;
+        private readonly CreatureOnMap creature;
+
+        public GridMoveState(IGridMap map, CreatureOnMap creature)
+        {
+            this.map = map;
+            this.creature = creature;
+        }
+
+        public void OnEnter()
+        {
+        }
+
+        public void OnExit()
+        {
+        }
+
+        public void Render()
+        {
+            int xPosition = 0;
+            int yPosition = 0;
+
+            for (int i = 0; i < map.XSize * map.YSize; i++)
+            {
+                if (creature.CretureXLocation != xPosition || creature.CretureYLocation != yPosition)
+                {
+                    map.GetTile(xPosition, yPosition).TileShape.Draw();
+                }
+                else
+                {
+                    Console.Write("#");
+                }
+
+                xPosition++;
+
+                if (xPosition >= map.XSize)
+                {
+                    xPosition = 0;
+                    yPosition++;
+                    Console.WriteLine();
+                }
+            }
+        }
+
+        public void Update()
+        {
+            ConsoleKeyInfo keyInfo;
+            while (ConsoleKey.Escape != keyInfo.Key)
+            {
+                keyInfo = Console.ReadKey();
+
+                if (keyInfo.Key == ConsoleKey.W)
+                {
+                    creature.MoveUp();
+                }
+                else if (keyInfo.Key == ConsoleKey.S)
+                {
+                    creature.MoveDown();
+                }
+                else if (keyInfo.Key == ConsoleKey.A)
+                {
+                    creature.MoveLeft();
+                }
+                else if (keyInfo.Key == ConsoleKey.D)
+                {
+                    creature.MoveRight();
+                }
+
+                Console.Clear();
+                Render();                
+            }
         }
     }
 }
