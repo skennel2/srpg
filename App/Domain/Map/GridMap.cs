@@ -32,6 +32,8 @@ namespace Srpg.App.Domain.Map
         public string Name => name;
         public int XSize => xSize;
         public int YSize => ySize;
+        
+        private int TileCount { get => xSize * ySize; }
 
         public void FillUpWith(Tile defaultTile)
         {
@@ -53,19 +55,7 @@ namespace Srpg.App.Domain.Map
 
         public bool IsAbleToLanding(int x, int y)
         {
-            bool result = false;
-            try
-            {
-                result = GetTile(x, y).CanCreatureLanding;
-            }
-            catch(ArgumentOutOfRangeException)
-            {
-                result = false;
-            }
-            
-            return result;
+            return GetTile(x, y).CanCreatureLanding && x < xSize && y < ySize && x >= 0 && y >= 0;;
         }
-
-        private int TileCount { get => xSize * ySize; }
     }
 }

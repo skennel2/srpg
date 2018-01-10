@@ -23,8 +23,8 @@ namespace Srpg.App.Domain.Map
         }
 
         public int CreatureId => creatureId;
-        public int TeamId => teamId;
-        public IGridMap Map => map;
+        public int TeamId     => teamId;
+        public IGridMap Map   => map;
         public ICreature Creature => creature;
 
         public int CretureXLocation { get => cretureXLocation; private set => cretureXLocation = value; }
@@ -80,8 +80,11 @@ namespace Srpg.App.Domain.Map
 
         private void Move(int x, int y)
         {
-            this.CretureXLocation = x;
-            this.CretureYLocation = y;
-        }
+            if(map.IsAbleToLanding(x, y))
+            {
+                this.CretureXLocation = x;
+                this.CretureYLocation = y;
+            }
+        }        
     }
 }

@@ -108,11 +108,6 @@ namespace Srpg.App.Domain.Unit
             this.ExperiencePoint += amount;
         }        
 
-        public void UpdateStatus()
-        {
-
-        }
-
         public virtual void RecoveryHealth(int amount)
         {
             this.NowHealthPoint += amount;

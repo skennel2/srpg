@@ -8,4 +8,17 @@ namespace Srpg.App.Domain.AI
     {
         ICommand SelectCommand(CreatureOnMap warrior, List<ICommand> commands);
     }
+
+    public class MoqCommandSelectAI : ICommandSelectAI
+    {
+        public ICommand SelectCommand(CreatureOnMap warrior, List<ICommand> commands)
+        {
+            if(commands != null && commands.Count > 0)
+            {
+                return commands[0];
+            }
+
+            return null;
+        }
+    }
 }

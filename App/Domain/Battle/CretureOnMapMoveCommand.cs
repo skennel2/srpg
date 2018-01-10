@@ -1,3 +1,4 @@
+using System;
 using Srpg.App.Domain.Common;
 using Srpg.App.Domain.Map;
 
@@ -24,6 +25,11 @@ namespace Srpg.App.Domain.Battle
         public void Execute()
         {
             creature.Move(direction);
+        }
+
+        public override string ToString()
+        {
+            return Enum.GetName(typeof(CreatureMoveDirection), direction);
         }
     }
 }

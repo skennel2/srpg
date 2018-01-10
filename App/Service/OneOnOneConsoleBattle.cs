@@ -52,10 +52,7 @@ namespace Srpg.App.Service
             {
                 nowTurn++;
                 PrintTurnChangeMessage();
-
-                w1.UpdateStatus();
-                w2.UpdateStatus();
-
+                
                 WarriorBase attacker = turnToggle ? w1 : w2;
                 WarriorBase depender = !turnToggle ? w1 : w2;
                 Console.WriteLine(attacker.Name + " attack " +depender.Name + "!!!");

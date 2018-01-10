@@ -1,33 +1,41 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using Srpg.App.Domain.AI;
+using Srpg.App.Domain.Battle;
 using Srpg.App.Domain.Common;
 using Srpg.App.Domain.Map;
 using Srpg.App.Domain.Unit;
 
-namespace Srpg.App.Domain.Battle
+namespace Srpg.App.Domain.State
 {
     public class BattleState : IState
     {
         private int nowTurn;
-        private readonly List<CreatureOnMap> creatures;
+        private readonly Queue<CreatureOnMap> creatures;
         private readonly IGridMap map;
-        private readonly int playerTeamId;
+        private readonly int playerTeamId;        
+
+        private bool isRunning = true;
+        private RunningState state = RunningState.Prepere;
 
         public BattleState(int nowTurn, IGridMap map, int playerTeamId)
         {
             this.nowTurn = nowTurn;
             this.map = map;
             this.playerTeamId = playerTeamId;
-            creatures = new List<CreatureOnMap>();
+            creatures = new Queue<CreatureOnMap>();
         }
 
-        public int NowTurn { get => nowTurn; }
+        public int NowTurn { get => nowTurn;}
         public IGridMap Map => map;
         public int PlayerTeamId => playerTeamId;
 
-        public void JoinToBattle(int teamId, IWarrior warrior, int xLocation, int yLocation)
+        public void JoinToBattle(int teamId, int warriorId, IWarrior warrior, int xLocation, int yLocation)
         {
+            if(RunningState.Prepere != state) throw new Exception();
+
             if (creatures.Count > map.XSize * map.YSize)
             {
                 throw new OverflowException();
@@ -37,8 +45,8 @@ namespace Srpg.App.Domain.Battle
                 throw new Exception();
             }
 
-            var creatureOnMap = new CreatureOnMap(creatures.Count + 1, teamId, map, warrior, xLocation, yLocation);
-            creatures.Add(creatureOnMap);
+            var creatureOnMap = new CreatureOnMap(warriorId, teamId, map, warrior, xLocation, yLocation);
+            creatures.Enqueue(creatureOnMap);
         }
 
         public CreatureOnMap GetCreature(int creatureId)
@@ -158,8 +166,51 @@ namespace Srpg.App.Domain.Battle
             }
         }
 
+        public void Run()
+        {
+            this.state = RunningState.Running;
+
+            while(nowTurn < 20)
+            {
+                Render();
+                Update();
+                Thread.Sleep(5000);
+                Console.Clear();
+            }        
+        }
+
         public void Update()
         {
+            nowTurn++;                    
+            CreatureOnMap creature = creatures.Dequeue();
+            var commandsList = GetCommandList(creature.CreatureId);
+
+            Console.WriteLine(creature.CreatureId);
+            Console.WriteLine(creature.TeamId);
+            Console.WriteLine(commandsList.Count);
+
+            ICommand command = null;
+            if(creature.TeamId == this.PlayerTeamId)
+            {
+                foreach (var item in commandsList)
+                {
+                    Console.WriteLine(item.ToString());
+                }
+
+                if(commandsList.Count > 0)
+                {
+                    int intTemp = Convert.ToInt32(Console.ReadLine());
+
+                    command = commandsList[intTemp];
+                }
+            }
+            else
+            {
+                command = new MoqCommandSelectAI().SelectCommand(creature, commandsList);
+            }
+            
+            command?.Execute();
+            creatures.Enqueue(creature);
 
         }
 
@@ -167,5 +218,14 @@ namespace Srpg.App.Domain.Battle
         {
 
         }
+    }
+
+
+
+    public enum RunningState 
+    {
+        Prepere, 
+        Running,
+        End,
     }
 }

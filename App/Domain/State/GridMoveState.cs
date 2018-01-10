@@ -2,7 +2,7 @@ using System;
 using Srpg.App.Domain.Common;
 using Srpg.App.Domain.Map;
 
-namespace Srpg.App.Domain.Battle
+namespace Srpg.App.Domain.State
 {
     public class GridMoveState : IState
     {

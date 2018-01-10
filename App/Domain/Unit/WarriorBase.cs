@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Srpg.App.Domain.CombatSkill;
 using Srpg.App.Domain.Common;
+using Srpg.App.Domain.Map;
 
 namespace Srpg.App.Domain.Unit
 {
