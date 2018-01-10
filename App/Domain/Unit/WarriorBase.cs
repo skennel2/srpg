@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using srpg.App.Domain.Common;
 using Srpg.App.Domain.CombatSkill;
 using Srpg.App.Domain.Common;
 using Srpg.App.Domain.Map;
@@ -8,6 +9,7 @@ namespace Srpg.App.Domain.Unit
     public class WarriorBase : CreatureBase, IWarrior
     {
         private ICombatSkill combatSkill;
+        private int turnForMove;
 
         public WarriorBase(long id, string name, int nowLevel, int experiencePoint,
             int maxHealthPoint, int nowHealthPoint, double depensiveRate, IShapable creatureShape, ICombatSkill combatSkill) 

@@ -32,39 +32,22 @@ namespace Srpg.App.Domain.State
         public IGridMap Map => map;
         public int PlayerTeamId => playerTeamId;
 
-        public void JoinToBattle(int teamId, int warriorId, IWarrior warrior, int xLocation, int yLocation)
-        {
-            if(RunningState.Prepere != state) throw new Exception();
-
-            if (creatures.Count > map.XSize * map.YSize)
-            {
-                throw new OverflowException();
-            }
-            if (GetCreatureAt(xLocation, yLocation) != null)
-            {
-                throw new Exception();
-            }
-
-            var creatureOnMap = new CreatureOnMap(warriorId, teamId, map, warrior, xLocation, yLocation);
-            creatures.Enqueue(creatureOnMap);
-        }
-
-        public CreatureOnMap GetCreature(int creatureId)
+        private CreatureOnMap GetCreature(int creatureId)
         {
             return creatures.FirstOrDefault(c => c.CreatureId == creatureId);
         }
 
-        public CreatureOnMap GetCreatureAt(int x, int y)
+        private CreatureOnMap GetCreatureAt(int x, int y)
         {
             return creatures.FirstOrDefault(c => c.CretureXLocation == x && c.CretureYLocation == y);
         }
 
-        public List<ICommand> GetCommandList(int creatureId)
+        private List<ICommand> GetCommandList(int creatureId)
         {
             List<ICommand> commandList = new List<ICommand>();
 
             var creature = GetCreature(creatureId);
-            if (creature != null) //////asdfasdfasdf/
+            if (creature != null) 
             {
                 if (IsCreatureCanMove(creature, CreatureMoveDirection.Right))
                 {
@@ -121,6 +104,23 @@ namespace Srpg.App.Domain.State
             return true;
         }
 
+        public void JoinToBattle(int teamId, int warriorId, IWarrior warrior, int xLocation, int yLocation)
+        {
+            if(RunningState.Prepere != state) throw new Exception();
+
+            if (creatures.Count > map.XSize * map.YSize)
+            {
+                throw new OverflowException();
+            }
+            if (GetCreatureAt(xLocation, yLocation) != null)
+            {
+                throw new Exception();
+            }
+
+            var creatureOnMap = new CreatureOnMap(warriorId, teamId, map, warrior, xLocation, yLocation);
+            creatures.Enqueue(creatureOnMap);
+        }
+
         public void MoveCreature(int creatureId, CreatureMoveDirection direction)
         {
             IGridMovable moveable = GetCreature(creatureId);
@@ -133,16 +133,12 @@ namespace Srpg.App.Domain.State
             moveable.Move(direction);
         }
 
-        public void OnEnter()
-        {
-
-        }
-
         public void Render()
         {
             int xPosition = 0;
             int yPosition = 0;
 
+            Console.WriteLine(NowTurn + "Turns");
             for (int i = 0; i < map.XSize * map.YSize; i++)
             {
                 var creature = GetCreatureAt(xPosition, yPosition);
@@ -170,57 +166,100 @@ namespace Srpg.App.Domain.State
         {
             this.state = RunningState.Running;
 
-            while(nowTurn < 20)
+            while(true)
             {
                 Render();
                 Update();
-                Thread.Sleep(50);
+                Thread.Sleep(700);
                 Console.Clear();
             }        
+
+            this.state = RunningState.End;
+        }
+
+        public void Reset()
+        {
+            this.creatures.Clear();
+            this.nowTurn = 0;
+            this.state = RunningState.Prepere;
         }
 
         public void Update()
-        {
-            nowTurn++;                    
-            CreatureOnMap creature = creatures.Dequeue();
-            var commandsList = GetCommandList(creature.CreatureId);
+        {     
+            CreatureOnMap creature = creatures.Peek();
+            var commands = GetCommandList(creature.CreatureId);
 
-            Console.WriteLine(creature.CreatureId);
-            Console.WriteLine(creature.TeamId);
-            Console.WriteLine(commandsList.Count);
+            ICommand commandSelected = null;
 
-            ICommand command = null;
             if(creature.TeamId == this.PlayerTeamId)
             {
-                foreach (var item in commandsList)
-                {
-                    Console.WriteLine(item.ToString());
-                }
-
-                if(commandsList.Count > 0)
-                {
-                    int intTemp = Convert.ToInt32(Console.ReadLine());
-
-                    command = commandsList[intTemp];
-                }
+                commandSelected = GetPlayerCommand(commands);
             }
             else
             {
-                command = new MoqCommandSelectAI().SelectCommand(creature, commandsList);
+                commandSelected = GetEnemyCommand(creature, commands);
             }
             
-            command?.Execute();
-            creatures.Enqueue(creature);
+            commandSelected?.Execute();
 
+            NextTurn();
+        }
+
+        private void NextTurn()
+        {
+            nowTurn++; 
+
+            var peek = creatures.Dequeue();
+            creatures.Enqueue(peek);
+        }
+
+        private ICommand GetEnemyCommand(CreatureOnMap creature, List<ICommand> commands)
+        {
+            return new MoqCommandSelectAI().SelectCommand(creature, commands);
+        }
+
+        private ICommand GetPlayerCommand(List<ICommand> commands)
+        {
+            ShowCommandList(commands);
+
+            if(commands.Count > 0)
+            {
+                return commands[GetInputNumber(commands.Count - 1)];
+            }
+
+            return null;
+        }
+
+        private void ShowCommandList(List<ICommand> commands)
+        {
+            foreach (var com in commands)
+            {
+                Console.WriteLine(com.ToString());
+            }
+        }
+
+        private int GetInputNumber(int maximumNumber)
+        {   
+            int result = -1;
+
+            if(!int.TryParse(Console.ReadLine(), out result) || result < 0 || result > maximumNumber)
+            {
+                result = GetInputNumber(maximumNumber);
+            }
+
+            return result;
         }
 
         public void OnExit()
         {
 
         }
+
+        public void OnEnter()
+        {
+
+        }
     }
-
-
 
     public enum RunningState 
     {

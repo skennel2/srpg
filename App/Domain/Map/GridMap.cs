@@ -6,6 +6,9 @@ using Srpg.App.Domain.Unit;
 namespace Srpg.App.Domain.Map
 {
 
+    /// <summary>
+    /// 타일 맵
+    /// </summary>
     public class GridMap : IGridMap
     {
         private string name;
@@ -55,7 +58,7 @@ namespace Srpg.App.Domain.Map
 
         public bool IsAbleToLanding(int x, int y)
         {
-            return GetTile(x, y).CanCreatureLanding && x < xSize && y < ySize && x >= 0 && y >= 0;;
+            return GetTile(x, y).CanCreatureLanding && x < xSize && y < ySize && x >= 0 && y >= 0;
         }
     }
 }

@@ -3,6 +3,9 @@ using Srpg.App.Domain.Common;
 
 namespace Srpg.App.ConsoleApp
 {
+    /// <summary>
+    /// 콘솔에 Tile에 대한 표현
+    /// </summary>
     public class TileConsoleShape : IShapable
     {
         private readonly char shape;

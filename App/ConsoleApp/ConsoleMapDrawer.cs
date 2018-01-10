@@ -4,6 +4,9 @@ using Srpg.App.Domain.Map;
 
 namespace Srpg.App.ConsoleApp
 {
+    /// <summary>
+    /// 콘솔에 IGridMap을 그린다. 
+    /// </summary>
     public class ConsoleMapDrawer : IDrawable
     {
         private readonly IGridMap map;
