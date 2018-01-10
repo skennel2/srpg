@@ -64,7 +64,7 @@ namespace Srpg.App.Domain.State
             List<ICommand> commandList = new List<ICommand>();
 
             var creature = GetCreature(creatureId);
-            if (creature != null)
+            if (creature != null) //////asdfasdfasdf/
             {
                 if (IsCreatureCanMove(creature, CreatureMoveDirection.Right))
                 {
@@ -174,7 +174,7 @@ namespace Srpg.App.Domain.State
             {
                 Render();
                 Update();
-                Thread.Sleep(5000);
+                Thread.Sleep(50);
                 Console.Clear();
             }        
         }
