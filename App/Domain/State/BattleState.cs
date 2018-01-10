@@ -39,7 +39,7 @@ namespace Srpg.App.Domain.State
 
         private CreatureOnMap GetCreatureAt(int x, int y)
         {
-            return creatures.FirstOrDefault(c => c.CretureXLocation == x && c.CretureYLocation == y);
+            return creatures.FirstOrDefault(c => c.CretureXLocation == x && c.CretureYLocation == y && c.Creature.IsAlive);
         }
 
         private List<ICommand> GetCommandList(int creatureId)
@@ -49,6 +49,7 @@ namespace Srpg.App.Domain.State
             var creature = GetCreature(creatureId);
             if (creature != null) 
             {
+                // move
                 if (IsCreatureCanMove(creature, CreatureMoveDirection.Right))
                 {
                     commandList.Add(new CretureOnMapMoveCommand(creature, CreatureMoveDirection.Right));
@@ -64,6 +65,48 @@ namespace Srpg.App.Domain.State
                 if (IsCreatureCanMove(creature, CreatureMoveDirection.Up))
                 {
                     commandList.Add(new CretureOnMapMoveCommand(creature, CreatureMoveDirection.Up));
+                }
+
+                //attack
+                var directionList =  new List<CreatureMoveDirection>()
+                {
+                    CreatureMoveDirection.Down,
+                    CreatureMoveDirection.Up,
+                    CreatureMoveDirection.Left,
+                    CreatureMoveDirection.Right
+                };
+
+                foreach(var direction in directionList)
+                {
+                    int newXpos = creature.CretureXLocation;
+                    int newYpos = creature.CretureYLocation;
+
+                    if (direction == CreatureMoveDirection.Up)
+                    {
+                        newYpos -= 1;
+                    }
+                    else if (direction == CreatureMoveDirection.Down)
+                    {
+                        newYpos += 1;
+                    }
+                    else if (direction == CreatureMoveDirection.Left)
+                    {
+                        newXpos -= 1;
+                    }
+                    else if (direction == CreatureMoveDirection.Right)
+                    {
+                        newXpos += 1;
+                    }
+
+                    var target = GetCreatureAt(newXpos, newYpos);
+                    if(target != null && creature.Creature is WarriorBase)
+                    {
+                        commandList.Add(new CretureOnMapAttackCommand
+                        (
+                            creature.Creature as WarriorBase,
+                            new List<ICreature>(){ target.Creature }
+                        ));
+                    }
                 }
             }
 
@@ -138,7 +181,7 @@ namespace Srpg.App.Domain.State
             int xPosition = 0;
             int yPosition = 0;
 
-            Console.WriteLine(NowTurn + "Turns");
+            ShowStatus();
             for (int i = 0; i < map.XSize * map.YSize; i++)
             {
                 var creature = GetCreatureAt(xPosition, yPosition);
@@ -202,6 +245,8 @@ namespace Srpg.App.Domain.State
             
             commandSelected?.Execute();
 
+            Console.WriteLine(creature.Creature.NowHealthPoint);
+            
             NextTurn();
         }
 
@@ -210,7 +255,22 @@ namespace Srpg.App.Domain.State
             nowTurn++; 
 
             var peek = creatures.Dequeue();
-            creatures.Enqueue(peek);
+
+            if(peek.Creature.IsAlive)
+            {
+                creatures.Enqueue(peek);
+            }
+        }
+
+        private void ShowStatus()
+        {
+            Console.WriteLine(NowTurn + "Turns");
+
+            foreach(var creature in creatures)
+            {
+                var c = creature.Creature;
+                Console.WriteLine(c.Name + " HP :  " + c.NowHealthPoint.ToString() + "/" + c.MaxHealthPoint.ToString());
+            }
         }
 
         private ICommand GetEnemyCommand(CreatureOnMap creature, List<ICommand> commands)

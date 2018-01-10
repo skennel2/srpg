@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Srpg.App.Domain.Common;
 using Srpg.App.Domain.Unit;
@@ -24,6 +25,11 @@ namespace Srpg.App.Domain.Battle
             {
                 (attacker as IWarrior).Attack(targets);
             }
+        }
+
+        override public string ToString()
+        {
+            return "Attack " + targets[0].Name;
         }
     }
 }

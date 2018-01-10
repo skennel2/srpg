@@ -86,5 +86,16 @@ namespace Srpg.App.Domain.Map
                 this.CretureYLocation = y;
             }
         }        
+
+        public void Attack(CreatureBase creature)
+        {
+            WarriorBase warrior = null;
+            if(Creature is IWarrior)
+            {
+                warrior = creature as WarriorBase;
+
+                warrior.Attack(creature);
+            }
+        }
     }
 }

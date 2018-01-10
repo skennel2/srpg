@@ -31,9 +31,9 @@ namespace Srpg.App.Test
         {
             IGridMap map = new JsonToGridMapGenerator(new MockTileSetMapper()).GenerateMap(@"App/Resources/Map/TestJsMap.json");
             
-            IWarrior w1 = new WarriorBase(1, "w1", 1, 0, 500, 500, 0.1, new TileConsoleShape('★'), new MeleeAttack("melee", 30, 40));
-            IWarrior w2 = new WarriorBase(2, "w2", 1, 0, 500, 450, 0.12, new TileConsoleShape('☆'), new MeleeAttack("melee2", 40, 40));   
-            IWarrior w3 = new WarriorBase(2, "w2", 1, 0, 500, 450, 0.12, new TileConsoleShape('a'), new MeleeAttack("melee2", 40, 40));   
+            IWarrior w1 = new WarriorBase(1, "w1", 1, 0, 100, 100, 0.1, new TileConsoleShape('★'), new MeleeAttack("melee", 30, 40));
+            IWarrior w2 = new WarriorBase(2, "w2", 1, 0, 100, 100, 0.12, new TileConsoleShape('☆'), new MeleeAttack("melee2", 40, 40));   
+            IWarrior w3 = new WarriorBase(2, "w2", 1, 0, 100, 100, 0.12, new TileConsoleShape('a'), new MeleeAttack("melee2", 40, 40));   
 
             BattleState combatState = new BattleState(0, map, 1);
             combatState.JoinToBattle(1, 10,  w1, 2, 2);

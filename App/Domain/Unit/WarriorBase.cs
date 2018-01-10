@@ -35,7 +35,7 @@ namespace Srpg.App.Domain.Unit
 
         public virtual void ChangeCombatSkill(ICombatSkill combatSkill)
         {
-            this.combatSkill = combatSkill;
+            this.combatSkill = combatSkill; 
         }
     }
 }
