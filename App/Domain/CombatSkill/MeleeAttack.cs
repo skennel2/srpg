@@ -1,4 +1,3 @@
-using System;
 using Srpg.App.Domain.Unit;
 using Srpg.App.Util;
 

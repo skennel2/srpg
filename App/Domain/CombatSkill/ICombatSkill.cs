@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Srpg.App.Domain.Common;
 using Srpg.App.Domain.Unit;
 
